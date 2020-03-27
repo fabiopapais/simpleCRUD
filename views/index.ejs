@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>simpleCRUD</title>
+</head>
+<body>
+    <h2>Registrar<h2>
+    <form action="/show" method="POST"> <!-- Muito importante sempre ter os atributos "action" (para onde será redirecionado no nosso app Express) e "method" (Qual método deverá ser usado no redirecionamento)-->
+        <input type="text" placeholder="Nome" name="name"> <!-- Todos os elementos <input> do form devem ter o atributo "name"-->
+        <input type="text" placeholder="Sobrenome" name="surname">
+        <button type="submit">Submit</button>
+    </form> 
+</body>
+</html>
