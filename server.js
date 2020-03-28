@@ -9,7 +9,7 @@ const app = express() // Express é uma forma mais rápida de criar servidores c
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient // Configurando para o cline MongoDB
 
-const uri = "mongodb+srv://username:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
+const uri = "mongodb+srv://fabio_papais:36562145@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
 
 // Conectando com o cliente MongoDB e startando o server
 MongoClient.connect(uri, (err, client) => {

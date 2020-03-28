@@ -4,21 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <title>simpleCRUD</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-
-    <h2>Editar Registro</h2>
-    <% data.forEach(function(details) { %>
-    <form action="/edit/<%= details._id %>" method="POST">
-        <input type="text" value="<%= details.name %>" name="name">
-        <input type="text" value="<%= details.surname %>" name="surname">
-        <br />
-        <button><a href="/show">Todos</a></button>
-        <button type="submit">Editar</button>
-    </form>
-    <% }) %>
-
+    <div class="main">
+        <div class="wrapper"> <!-- "main" and "wrapper" just to center elements-->
+            <div class="primaryBox">
+                <h2 class="title">Editar Registro</h2>
+                    <% data.forEach(function(details) { %>
+                    <form class="info" action="/edit/<%= details._id %>" method="POST">
+                        <input class="inputs" type="text" value="<%= details.name %>" name="name" placeholder="Nome">
+                        <input class="inputs" type="text" value="<%= details.surname %>" name="surname" placeholder="Sobrenome">
+                        <input class="inputs" type="text" value="<%= details.email %>" name="email" placeholder="Email">
+                        <input class="inputs" type="text" value="<%= details.password %>" name="password" placeholder="Senha">
+                        <a href="/show"><button id="return" class="button">Voltar</button></a>
+                        <button id="edit" class="button" type="submit">Editar</button>
+                    </form>
+                <% }) %>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

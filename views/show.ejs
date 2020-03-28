@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>simpleCRUD</title>
-</head>
-<body>
 
-<h2>Registros<h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <td>Nome</td>
-                <td>Sobrenome</td>
-            </tr>
-        </thead>
-        <tbody>
-        <% data.forEach(function(details) { %>
-            <tr>
-                <td><%= details.name %></td>
-                <td><%= details.surname %></td>
-                <td><a href="/edit/<%=details._id %>">Editar</a> - <a href="/delete/<%= details._id %>">Deletar</a></td>
-            </tr>
-            <% }) %>
-        </tbody>
-    </table>
-    <button><a href="/">Novo</a></button>
+<head>
+    <meta charset="UTF-8">
+    <title>simpleCRUD</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="wrapper"> <!-- "main" and "wrapper" just to center elements-->
+            <div class="primaryBox">
+                <h2 class="title">Dados no Banco<h2>
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <td>Nome</td>
+                                    <td>Sobrenome</td>
+                                    <td>Email</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data.forEach(function(details) { %>
+                                <tr>
+                                    <td><%= details.name %></td>
+                                    <td><%= details.surname %></td>
+                                    <td><%= details.email %></td>
+                                    <td><a href="/edit/<%=details._id %>">Editar</a> - <a href="/delete/<%= details._id %>">Deletar</a></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    <a href="/"><button class="button" id="newRegister">Voltar</button></a>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
