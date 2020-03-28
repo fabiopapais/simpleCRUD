@@ -9,11 +9,11 @@ const app = express() // Express é uma forma mais rápida de criar servidores c
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient // Configurando para o cline MongoDB
 
-const uri = "mongodb+srv://<username>:<password)@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
+const uri = "mongodb+srv://username:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
 
 // Conectando com o cliente MongoDB e startando o server
 MongoClient.connect(uri, (err, client) => {
-    if (err) return console.log(err)
+    if (err) return console.log(err) 
     db = client.db('simpleCRUD')
 
     app.listen(3000, () => { // O servidor só roda no localhost:3000 se conseguir se conectar no cliente MongoDB
@@ -21,26 +21,15 @@ MongoClient.connect(uri, (err, client) => {
     })
 })
 
+app.use(express.static(__dirname + '/public'))
+
 app.use(bodyParser.urlencoded({ extended: true })) //O método urlencoded dentro de body-parser diz ao body-parser para extrair dados do elemento <form> e adicioná-los à propriedade body no objeto request.
 
-app.set('view engine', 'ejs') // Configurando o EJS, que facilita a interação entre o NodeJS e o HTML
+app.set('view engine', 'ejs') // Configurando o EJS, que facilita a interação entre o Express e o HTML
 
 // GET (Read)
 app.get('/', (req, res) => {
     res.render('index.ejs') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET, e neste bloco colocamos como "response" nosso HTML (com EJS)
-})
-
-// GET (Read)
-app.get('/', (req, res) => {
-    let cursor = db.collection('data').find() // Definindo nossa var cursor que contém os dados do nosso bd
-}) 
-
-// GET (Read)
-app.get('/show', (req, res) => {
-    db.collection('data').find().toArray((err, results) => {
-        if (err) return console.log(err)
-        res.render('show.ejs', { data: results })
-    })
 })
 
 // POST (Create)
@@ -53,12 +42,21 @@ app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que 
     })
 })
 
+// GET (Read)
+app.get('/show', (req, res) => { // O nosso form nos manda para "/show" e lá o navegador irá fazer outra request GET, que respondemos com os dados do nosso banco no ejs
+    db.collection('data').find().toArray((err, results) => {
+        if (err) return console.log(err)
+
+        res.render('show.ejs', { data: results })
+    })
+})
+
 // Para editar os dados (PUT)
 app.route('/edit/:id')
 .get((req, res) => { // Pegando o id do que queremos editar com base no que foi feito na view
     var id = req.params.id
 
-    db.collection('data').find(ObjectId(id)).toArray((err, result) => {
+    db.collection('data').find(ObjectId(id)).toArray((err, result) => { // Com base nesse id, nosso server.js vai renderiazar a página de edição para o id (a pessoa) que queremos
         if (err) return res.send(err)
         res.render('edit.ejs', { data: result })
     })
@@ -74,7 +72,7 @@ app.route('/edit/:id')
             surname: surname
         }
     }, (err, result) => {
-        if (err) return res.send(err)
+        if (err) return res.send(err), console.log(err)
         res.redirect('/show')
         console.log('Atualizado no Banco de Dados!')
     })

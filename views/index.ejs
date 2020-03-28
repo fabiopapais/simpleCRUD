@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>simpleCRUD</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
+
 <body>
-    <h2>Registrar<h2>
-    <form action="/show" method="POST"> <!-- Muito importante sempre ter os atributos "action" (para onde será redirecionado no nosso app Express) e "method" (Qual método deverá ser usado no redirecionamento)-->
-        <input type="text" placeholder="Nome" name="name"> <!-- Todos os elementos <input> do form devem ter o atributo "name"-->
-        <input type="text" placeholder="Sobrenome" name="surname">
-        <button type="submit">Submit</button>
-    </form> 
+  <div class="main">
+    <div class="wrapper"> <!-- "main" and "wrapper" just to center elements-->
+      <div class="primaryBox">
+        <h2 class="title">Sign Up<h2>
+            <form class="info" action="/show" method="POST">
+              <!-- Muito importante sempre ter os atributos "action" (para onde será redirecionado no nosso app Express) e "method" (Qual método deverá ser usado no redirecionamento)-->
+              <input class="inputs" type="text" placeholder="Nome" name="name">
+              <!-- Todos os elementos <input> do form devem ter o atributo "name"-->
+              <input class="inputs" type="text" placeholder="Sobrenome" name="surname">
+              <input id="email" class="inputs" type="text" placeholder="Email" name="email">
+              <input class="inputs" type="text" placeholder="Senha">
+              <input class="inputs" type="text" placeholder="Confirme Senha" name="password">
+
+              <button class="button" type="submit">Submit</button>
+            </form>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
