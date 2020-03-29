@@ -17,10 +17,10 @@
               <input class="inputs" type="text" placeholder="Nome" name="name" required>
               <!-- Todos os elementos <input> do form devem ter o atributo "name"-->
               <input class="inputs" type="text" placeholder="Sobrenome" name="surname" required>
-              <input id="email" class="inputs" type="text" placeholder="Email" name="email" required>
+              <input id="email" class="inputs" type="email" placeholder="Email" name="email" required>
               <input id="password1" class="inputs" type="password" placeholder="Senha" required>
-              <input id="password2" class="inputs" type="password" placeholder="Confirme Senha" name="password" oninput="passwordValidate(this)" required>
-              <label for="password" id = "matchStatus">A senha deve conter pelo menos 10 caracteres</label>
+              <input id="password2" class="inputs" type="password" placeholder="Confirme Senha" name="password" oninput="passwordMatch(this)" required>
+              <label for="password" id = "matchStatus">A senha deve conter pelo menos 10 caracteres!</label>
               <meter name="meter" max="4" id="passwordStrengthMeter"></meter>
 
               <input class="button" id="register" type="submit" value="Cadastrar">
@@ -34,19 +34,18 @@
 var password1 = document.getElementById('password1')
 // var password2 = document.getElementById('password2')
 var matchStatus = document.getElementById('matchStatus')
-
 var meter = document.getElementById('passwordStrengthMeter')
+
 password1.addEventListener('input', () => {
   //zxcvbn library for password strength
   var val = password1.value
   var result = zxcvbn(val)
-  meter.value = result.score // Update the password strength meter
+  meter.value = result.score // Update the password strength meter (and visually wih CSS)
 })
 
-function passwordValidate(input) {
-  console.log("shure")
-  if (input.value.length < 10) {
-      matchStatus.innerHTML = "A senha deve conter pelo menos 10 caracteres"
+function passwordMatch(input) {
+  if (input.value.length < 10) { // Client-side password length validation isn't safe in real scenarios, used here just to exemplify
+      matchStatus.innerHTML = "A senha deve conter pelo menos 10 caracteres!"
   }
   else {
     if (input.value != password1.value) {

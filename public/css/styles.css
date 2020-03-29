@@ -135,6 +135,7 @@ tbody tr:hover {
 
 /* edit.ejs */
 #return {
+    width: 100%;
     border: 1pt solid rgb(97, 40, 40);
     color: rgb(97, 40, 40);
 }

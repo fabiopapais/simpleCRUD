@@ -12,11 +12,11 @@
         <div class="wrapper"> <!-- "main" and "wrapper" just to center elements-->
             <div class="primaryBox">
                 <h2 class="title">Editar Registro</h2>
-                    <% data.forEach(function(details) { %>
+                <% data.forEach(function(details) { %>
                     <form class="info" action="/edit/<%= details._id %>" method="POST">
                         <input class="inputs" type="text" value="<%= details.name %>" name="name" placeholder="Nome">
                         <input class="inputs" type="text" value="<%= details.surname %>" name="surname" placeholder="Sobrenome">
-                        <input class="inputs" type="text" value="<%= details.email %>" name="email" placeholder="Email">
+                        <input class="inputs" type="email" value="<%= details.email %>" name="email" placeholder="Email">
                         <input class="inputs" type="text" value="<%= details.password %>" name="password" placeholder="Senha">
                         <a href="/show"><button id="return" class="button">Voltar</button></a>
                         <button id="edit" class="button" type="submit">Editar</button>

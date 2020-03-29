@@ -1,4 +1,5 @@
 # simpleCRUD
-Making a simple CRUD with NodeJS, Express e MongoDB
+Making a simple CRUD with NodeJS, Express, EJS e MongoDB
 
-https://medium.com/baixada-nerd/criando-um-crud-completo-com-nodejs-express-e-mongodb-parte-1-3-6c8389d7147d
+The system is a simple sign up/in interface that shows the registered users when you sign in
+

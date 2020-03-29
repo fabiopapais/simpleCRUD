@@ -17,18 +17,18 @@ MongoClient.connect(uri, (err, client) => {
     db = client.db('simpleCRUD')
 
     app.listen(3000, () => { // O servidor só roda no localhost:3000 se conseguir se conectar no cliente MongoDB
-        console.log('Server running on port 3000 and Mongo Client connected') // O método ".listen" do Express inicia um socket UNIX e escuta as conexões em um caminho fornecido (no caso, localhost:3000)
+        console.log('Server running on port 3000 and Mongo Client connected!') // O método ".listen" do Express inicia um socket UNIX e escuta as conexões em um caminho fornecido (no caso, localhost:3000)
     })
 })
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public')) // So we can use CSS
 
 app.use(bodyParser.urlencoded({ extended: true })) //O método urlencoded dentro de body-parser diz ao body-parser para extrair dados do elemento <form> e adicioná-los à propriedade body no objeto request.
 
 app.set('view engine', 'ejs') // Configurando o EJS, que facilita a interação entre o Express e o HTML
 
 // GET (Read)
-app.get('/', (req, res) => {
+app.get('/register', (req, res) => {
     res.render('index.ejs') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET, e neste bloco colocamos como "response" nosso HTML (com EJS)
 })
 
@@ -65,11 +65,13 @@ app.route('/edit/:id')
     var id = req.params.id
     var name = req.body.name
     var surname = req.body.surname
+    var email = req.body.email
 
     db.collection('data').updateOne({_id: ObjectId(id)}, {
         $set: {
             name: name,
-            surname: surname
+            surname: surname,
+            email: email
         }
     }, (err, result) => {
         if (err) return res.send(err), console.log(err)
