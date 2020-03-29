@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:500,600,700,800,900&display=swap');
+
+/* COMMON CSS */
+html, body {
+    height: 100%;
+    background-color: rgb(40, 53, 97);
+}
+.main {
+    height: 100%;
+    width: 100%;
+    display: table;
+}
+.wrapper { 
+    display: table-cell;
+    height: 100%;
+    vertical-align: middle;
+}
+.primaryBox {
+    font-family: 'Fira Sans', sans-serif;
+    color: rgb(40, 53, 97);
+    background-color: #ffffff;
+    border-radius: 3px;
+    width: 650px;
+    margin: auto;
+    padding: 50px;
+    box-shadow: 0pt 0pt 50pt rgb(83, 83, 83)
+}
+.title {
+    font-size: 36px;
+}
+.info {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 5px;
+    grid-row-gap: 10px;
+}
+.inputs {
+    border: 1pt solid rgb(40, 53, 97);
+    border-radius: 3px; 
+    padding: 10px;
+    font-size: 15px;
+}
+.button {
+    border: 1pt solid rgb(40, 53, 97);
+    border-radius: 3px;
+    height: 60px;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    color: rgb(40, 53, 97);
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.button:hover {
+    background-color: rgb(40, 53, 97);
+    color: #ffffff;
+}
+
+
+/* ESPECIFIC CSS */
+
+/* index.ejs */
+#email {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+#register {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+label {
+    font-size: 14px;
+    color: #6d6d6d;
+}
+
+/* show.ejs*/
+#newRegister {
+    width: 100%;
+}
+a:visited {
+    color: #0037ee;
+}
+table, td, th {
+    border-collapse: collapse;
+    border: 1px solid #ffffff;
+    padding: 10px;
+}
+tbody tr {
+    color: rgb(74, 98, 179);
+    transition: 0.2s;
+}
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* edit.ejs */
+#return {
+    border: 1pt solid rgb(97, 40, 40);
+    color: rgb(97, 40, 40);
+}
+#return:hover {
+    background-color: rgb(97, 40, 40);
+    color: #ffffff;
+}
+#edit {
+    border: 1pt solid rgb(45, 97, 40);
+    color: rgb(45, 97, 40);
+}
+#edit:hover {
+    background-color: rgb(45, 97, 40);
+    color: #ffffff;
+}
