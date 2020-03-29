@@ -74,6 +74,44 @@ label {
     font-size: 14px;
     color: #6d6d6d;
 }
+meter {
+    /* Reset the default appearance */
+    -moz-appearance: none;
+    appearance: none;
+
+    margin: 0 auto 1em;
+    width: 100%;
+    height: 0.5em;
+    border-radius: 15px;
+
+    /* Applicable only to Firefox */
+    background: none;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+meter::-webkit-meter-bar {
+    background: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+/* Webkit based browsers */
+meter[value="1"]::-webkit-meter-optimum-value { background: red; border-radius: 15px;}
+meter[value="2"]::-webkit-meter-optimum-value { background: orange; border-radius: 15px;}
+meter[value="3"]::-webkit-meter-optimum-value { background: yellow; border-radius: 15px;}
+meter[value="4"]::-webkit-meter-optimum-value { background: green; border-radius: 15px;}
+
+/* Gecko based browsers */
+meter[value="1"]::-moz-meter-bar { background: red; border-radius: 15px;}
+meter[value="2"]::-moz-meter-bar { background: orange; border-radius: 15px;}
+meter[value="3"]::-moz-meter-bar { background: yellow; border-radius: 15px;}
+meter[value="4"]::-moz-meter-bar { background: green; border-radius: 15px;}
+
+meter::-webkit-meter-optimum-value {
+    transition: .9s;
+}
+#matchStatus {
+    width: 50%;
+}
+
 
 /* show.ejs*/
 #newRegister {

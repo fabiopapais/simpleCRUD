@@ -12,16 +12,16 @@
     <div class="wrapper"> <!-- "main" and "wrapper" just to center elements-->
       <div class="primaryBox">
         <h2 class="title">Sign Up<h2>
-            <form id="registerForm" class="info" action="/show" onsubmit="return passwordValidation()" method="POST">
+            <form id="registerForm" class="info" action="/show" method="POST">
               <!-- Muito importante sempre ter os atributos "action" (para onde será redirecionado no nosso app Express) e "method" (Qual método deverá ser usado no redirecionamento)-->
               <input class="inputs" type="text" placeholder="Nome" name="name" required>
               <!-- Todos os elementos <input> do form devem ter o atributo "name"-->
               <input class="inputs" type="text" placeholder="Sobrenome" name="surname" required>
               <input id="email" class="inputs" type="text" placeholder="Email" name="email" required>
               <input id="password1" class="inputs" type="password" placeholder="Senha" required>
-              <input id="password2" class="inputs" type="password" placeholder="Confirme Senha" name="password" required>
-              <label for="password">A senha deve conter pelo menos 10 caracteres </label>
-              <p id="passwordValidationProgress">Status</p>
+              <input id="password2" class="inputs" type="password" placeholder="Confirme Senha" name="password" oninput="passwordValidate(this)" required>
+              <label for="password" id = "matchStatus">A senha deve conter pelo menos 10 caracteres</label>
+              <meter name="meter" max="4" id="passwordStrengthMeter"></meter>
 
               <input class="button" id="register" type="submit" value="Cadastrar">
             </form>
@@ -29,25 +29,33 @@
     </div>
   </div>
 </body>
-<script>
-  let registerForm = document.getElementById("registerForm")
-  let registerButton = document.getElementById("register")
-  let label = document.getElementsByTagName("label") 
-  let password1 = document.getElementById("password1")
-  let password2 = document.getElementById("password2")
-  let passwordValidationProgress = document.getElementById("passwordValidationProgress")
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+<script language='javascript' type='text/javascript'>
+var password1 = document.getElementById('password1')
+// var password2 = document.getElementById('password2')
+var matchStatus = document.getElementById('matchStatus')
 
-  function passwordValidation() {
-    console.log(password1.value, password2.value)
-    if (password1.value =! password2.value) {
-      window.alert("not match")
-      console.log("not match")
+var meter = document.getElementById('passwordStrengthMeter')
+password1.addEventListener('input', () => {
+  //zxcvbn library for password strength
+  var val = password1.value
+  var result = zxcvbn(val)
+  meter.value = result.score // Update the password strength meter
+})
+
+function passwordValidate(input) {
+  console.log("shure")
+  if (input.value.length < 10) {
+      matchStatus.innerHTML = "A senha deve conter pelo menos 10 caracteres"
+  }
+  else {
+    if (input.value != password1.value) {
+        matchStatus.innerHTML = "As senhas não correspondem!"
     }
-    if (password1.value == password2.value) {
-      window.alert("MATCH")
-      console.log("not match")
+    else {
+      matchStatus.innerHTML = "Tudo certo!"
     }
   }
+}
 </script>
-
 </html>
