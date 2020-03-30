@@ -11,6 +11,7 @@ const MongoClient = require('mongodb').MongoClient // Configurando para o cline 
 
 const uri = "mongodb+srv://username:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
 
+
 // Conectando com o cliente MongoDB e startando o server
 MongoClient.connect(uri, (err, client) => {
     if (err) return console.log(err) 
@@ -21,11 +22,13 @@ MongoClient.connect(uri, (err, client) => {
     })
 })
 
-app.use(express.static(__dirname + '/public')) // So we can use CSS
+app.use(express.static(__dirname + '/public')) // So we can use CSSnpm
 
 app.use(bodyParser.urlencoded({ extended: true })) //O método urlencoded dentro de body-parser diz ao body-parser para extrair dados do elemento <form> e adicioná-los à propriedade body no objeto request.
 
 app.set('view engine', 'ejs') // Configurando o EJS, que facilita a interação entre o Express e o HTML
+
+
 
 // GET (Read)
 app.get('/register', (req, res) => {
