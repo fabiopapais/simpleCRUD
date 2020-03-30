@@ -16,13 +16,6 @@
 npm run dev
 ```
 
-## Author
-
-👤 **Fábio**
-
-* Github: [@fabiopapaiss](https://github.com/fabiopapaiss)
-* LinkedIn: [@https:\/\/www.linkedin.com\/in\/f%C3%A1bio-papais-86388848\/](https://linkedin.com/in/https:\/\/www.linkedin.com\/in\/f%C3%A1bio-papais-86388848\/)
-
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/fabiopapaiss/simpleCRUD/issues). 
@@ -33,8 +26,8 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2020 [Fábio](https://github.com/fabiopapaiss).<br />
 This project is [MIT](https://github.com/fabiopapaiss/simpleCRUD/blob/master/LICENSE) licensed.
+Made with ❤️ by [Fábio Papais](https://github.com/fabiopapaiss)
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
