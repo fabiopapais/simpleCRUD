@@ -11,9 +11,11 @@ const MongoClient = require('mongodb').MongoClient // Configurando para o cline 
 
 const uri = "mongodb+srv://username:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
 
+const crypto = require('crypto') // Middleware para criptografar as senhas
 
-// Conectando com o cliente MongoDB e startando o server
-MongoClient.connect(uri, (err, client) => {
+
+
+MongoClient.connect(uri, (err, client) => { // Conectando com o cliente MongoDB e startando o server
     if (err) return console.log(err) 
     db = client.db('simpleCRUD')
 
@@ -22,13 +24,24 @@ MongoClient.connect(uri, (err, client) => {
     })
 })
 
-app.use(express.static(__dirname + '/public')) // So we can use CSSnpm
+app.use(express.static(__dirname + '/public')) // Para usar o CSS
 
 app.use(bodyParser.urlencoded({ extended: true })) //O método urlencoded dentro de body-parser diz ao body-parser para extrair dados do elemento <form> e adicioná-los à propriedade body no objeto request.
 
 app.set('view engine', 'ejs') // Configurando o EJS, que facilita a interação entre o Express e o HTML
 
+const getHashedPassword = (password) => { // Nossa função para criptografar as senhas
+    const sha256 = crypto.createHash('sha256');
+    const hash = sha256.update(password).digest('base64');
+    return hash;
+}
 
+
+
+// GET (Read)
+app.get('/', (req, res) => {
+    res.redirect('/register') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET, e neste bloco colocamos como "response" nosso HTML (com EJS)
+})
 
 // GET (Read)
 app.get('/register', (req, res) => {
@@ -36,12 +49,29 @@ app.get('/register', (req, res) => {
 })
 
 // POST (Create)
-app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que foi marcado como "/show" no nosso HTML e envia para o cliente MongoDB
-    db.collection('data').save(req.body, (err, result) => {
-        if (err) return console.log(err)
+app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que foi marcado como "/show" no nosso HTML e envia para o cliente MongoDB, redirecionando no final para "/show"
+    var email = req.body.email // Email da request para fazer a validação
+    var userEmailValidation = false // variável usada nesta solução tosca para a validação do email no db
 
-        console.log('Salvo no banco de dados!')
-        res.redirect('/show') // Redirecionando o usuário para o início novamente
+    db.collection('data').find({}).toArray((err, results) => { // Pegando todo o nosso db para fazer as validações (solução tosca)
+        if (err) console.log(err)
+
+        results.forEach(element => { // Procurando a partir do "results" no nosso db se já existem emails cadastrados com o email da request
+            if (element.email == email) {
+                res.render('index.ejs', { emailValidationError: "Usuário já cadastrado!" }) // TODO Mensagem de erro ao usuário
+                userEmailValidation = true
+                return ""
+            }
+        })
+        if (userEmailValidation == false) { // TODO Solução melhor para a validação da nossa senha
+            req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de salvar
+            db.collection('data').save(req.body, (err, result) => { // Salvando a request no db
+            if (err) return console.log(err)
+            
+            console.log('Salvo no banco de dados!', results)
+            res.redirect('/show') // Redirecionando o usuário para a página de demonstração novamente
+            })
+        }
     })
 })
 

@@ -20,10 +20,10 @@ html, body {
     color: rgb(40, 53, 97);
     background-color: #ffffff;
     border-radius: 3px;
+    box-shadow: 0pt 0pt 50pt rgb(83, 83, 83);
     width: 650px;
     margin: auto;
     padding: 50px;
-    box-shadow: 0pt 0pt 50pt rgb(83, 83, 83)
 }
 .title {
     font-size: 36px;
@@ -110,6 +110,10 @@ meter::-webkit-meter-optimum-value {
 }
 #matchStatus {
     width: 50%;
+}
+#emailValidationError {
+    display: none;
+    visibility: hidden; 
 }
 
 
