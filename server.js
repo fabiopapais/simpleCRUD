@@ -9,7 +9,7 @@ const app = express() // Express é uma forma mais rápida de criar servidores c
 const ObjectId = require('mongodb').ObjectID
 const MongoClient = require('mongodb').MongoClient // Configurando para o clinte MongoDB
 
-const uri = "mongodb+srv://suername:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
+const uri = "mongodb+srv://username:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
 
 const crypto = require('crypto') // Middleware para criptografar as senhas
 
@@ -39,39 +39,18 @@ const getHashedPassword = (password) => { // Nossa função para criptografar as
 
 
 // GET (Read)
-app.get('/', (req, res) => {
-    res.redirect('/register') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET, e neste bloco colocamos como "response" nosso HTML (com EJS)
+app.get('/', (req, res) => { // TODO session management
+    res.redirect('/register') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET
 })
 
 // GET (Read)
 app.get('/register', (req, res) => { 
-    res.render('register.ejs') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET, e neste bloco colocamos como "response" nosso HTML (com EJS)
+    res.render('register.ejs') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET
 })
 
 // GET (Read)
 app.get('/login', (req, res) => {
     res.render('login.ejs') 
-})
-
-// POST (Create)
-app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que foi marcado como "/show" no nosso HTML e envia para o cliente MongoDB, redirecionando no final para "/show"
-    var reqEmail = req.body.email // Email da request para fazer a validação
-    req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de salvar
-
-    db.collection('data').find( { email: reqEmail } ).toArray((err, results) => {
-        console.log(results)
-        if (results.length > 0) {
-            return res.send("Usuário já cadastrado!")
-        }
-        else {
-            db.collection('data').save(req.body, (err, result) => { // Salvando a request no db
-            if (err) return console.log(err)
-            
-                console.log('Salvo no banco de dados!')
-                res.redirect('/show') // Redirecionando o usuário para a página de demonstração novamente
-            })
-        }
-    })
 })
 
 // GET (Read)
@@ -81,6 +60,49 @@ app.get('/show', (req, res) => { // O nosso form nos manda para "/show" e lá o 
 
         res.render('show.ejs', { data: results })
     })
+})
+
+// POST (Create)
+app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que foi marcado como "/show" no nosso HTML e envia para o cliente MongoDB, redirecionando no final para "/show"
+    if (req.body.name == undefined) { // No caso de a requisição vier de login.ejs (não existe nenhum input de "name", logo, sai undefined)
+        let reqEmail = req.body.email
+        req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de tudo
+
+        db.collection('data').find({ email: reqEmail }).toArray((err, results) => { // Achar o email no db
+            if (err) return console.log(err)
+
+            if (results.length > 0) { // Os resultados chegam em um array, pdemos ver a .length dele
+                if (results[0].password == req.body.password) { // Como recebemos em um array, temos que escolher o índice primeiro
+                    res.redirect('/show')
+                }
+                else { 
+                    return res.send("Senha Incorreta!")
+                }
+            }
+            else { // Caso não seja achado nada no banco
+                return res.send("Este usuário não existe")
+            }
+        })
+    }
+    else { // No caso de a requisição vier de register.ejs
+        req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de salvar
+        let reqEmail = req.body.email // Email da request para fazer a validação
+
+        db.collection('data').find({ email: reqEmail }).toArray((err, results) => {
+            if(err) return console.log(err)
+            if (results.length > 0) {
+                return res.send("Usuário já cadastrado!")
+            }
+            else {
+                db.collection('data').save(req.body, (err, result) => { // Salvando a request no db
+                    if (err) return console.log(err)
+
+                    console.log('Salvo no banco de dados!')
+                    res.redirect('/show') // Redirecionando o usuário para a página de demonstração novamente
+                })
+            }
+        })
+    }
 })
 
 // Para editar os dados (PUT)
@@ -125,3 +147,8 @@ app.route('/delete/:id')
         res.redirect('/show')
     })
 })
+
+
+
+
+
