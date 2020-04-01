@@ -7,9 +7,9 @@ const bodyParser = require('body-parser') // Este é um "plugin" (middleware) do
 const app = express() // Express é uma forma mais rápida de criar servidores com NodeJS
 
 const ObjectId = require('mongodb').ObjectID
-const MongoClient = require('mongodb').MongoClient // Configurando para o cline MongoDB
+const MongoClient = require('mongodb').MongoClient // Configurando para o clinte MongoDB
 
-const uri = "mongodb+srv://username:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
+const uri = "mongodb+srv://suername:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
 
 const crypto = require('crypto') // Middleware para criptografar as senhas
 
@@ -44,32 +44,31 @@ app.get('/', (req, res) => {
 })
 
 // GET (Read)
-app.get('/register', (req, res) => {
-    res.render('index.ejs') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET, e neste bloco colocamos como "response" nosso HTML (com EJS)
+app.get('/register', (req, res) => { 
+    res.render('register.ejs') // Ao abrir a página,. o navegador fará imediatamente uma requisição GET, e neste bloco colocamos como "response" nosso HTML (com EJS)
+})
+
+// GET (Read)
+app.get('/login', (req, res) => {
+    res.render('login.ejs') 
 })
 
 // POST (Create)
 app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que foi marcado como "/show" no nosso HTML e envia para o cliente MongoDB, redirecionando no final para "/show"
-    var email = req.body.email // Email da request para fazer a validação
-    var userEmailValidation = false // variável usada nesta solução tosca para a validação do email no db
+    var reqEmail = req.body.email // Email da request para fazer a validação
+    req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de salvar
 
-    db.collection('data').find({}).toArray((err, results) => { // Pegando todo o nosso db para fazer as validações (solução tosca)
-        if (err) console.log(err)
-
-        results.forEach(element => { // Procurando a partir do "results" no nosso db se já existem emails cadastrados com o email da request
-            if (element.email == email) {
-                res.render('index.ejs', { emailValidationError: "Usuário já cadastrado!" }) // TODO Mensagem de erro ao usuário
-                userEmailValidation = true
-                return ""
-            }
-        })
-        if (userEmailValidation == false) { // TODO Solução melhor para a validação da nossa senha
-            req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de salvar
+    db.collection('data').find( { email: reqEmail } ).toArray((err, results) => {
+        console.log(results)
+        if (results.length > 0) {
+            return res.send("Usuário já cadastrado!")
+        }
+        else {
             db.collection('data').save(req.body, (err, result) => { // Salvando a request no db
             if (err) return console.log(err)
             
-            console.log('Salvo no banco de dados!', results)
-            res.redirect('/show') // Redirecionando o usuário para a página de demonstração novamente
+                console.log('Salvo no banco de dados!')
+                res.redirect('/show') // Redirecionando o usuário para a página de demonstração novamente
             })
         }
     })
@@ -99,12 +98,14 @@ app.route('/edit/:id')
     var name = req.body.name
     var surname = req.body.surname
     var email = req.body.email
+    var password = getHashedPassword(req.body.password)
 
     db.collection('data').updateOne({_id: ObjectId(id)}, {
         $set: {
             name: name,
             surname: surname,
-            email: email
+            email: email,
+            password: password
         }
     }, (err, result) => {
         if (err) return res.send(err), console.log(err)

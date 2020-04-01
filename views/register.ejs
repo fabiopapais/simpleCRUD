@@ -25,10 +25,10 @@
 
               <input class="button" id="register" type="submit" value="Cadastrar">
             </form>
+            <h3 id="login">Já possui uma conta? <a href="/login">Faça login</a></h3>
       </div>
     </div>
   </div>
-  <div id="emailValidationError" ><%= /show/emailValidationError %></div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
 <script language='javascript' type='text/javascript'>
@@ -37,11 +37,7 @@ var matchStatus = document.getElementById('matchStatus')
 
 var meter = document.getElementById('passwordStrengthMeter')
 
-var emailValidationError =document.getElementById('emailValidationError')
 
-if (emailValidationError.innerText != "") {
-  window.alert("Usuário já cadastrado!")
-}
 
 password1.addEventListener('input', () => {
   //zxcvbn library for password strength

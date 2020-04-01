@@ -26,6 +26,7 @@ html, body {
     padding: 50px;
 }
 .title {
+    margin-top: -1px;
     font-size: 36px;
 }
 .info {
@@ -114,6 +115,13 @@ meter::-webkit-meter-optimum-value {
 #emailValidationError {
     display: none;
     visibility: hidden; 
+}
+#login {
+    text-align: right;
+    margin-top: 30px;
+    margin-bottom: -10px;
+    font-size: 14px;
+    color: rgb(136, 136, 136);
 }
 
 
