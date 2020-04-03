@@ -11,7 +11,7 @@ const MongoClient = require('mongodb').MongoClient // Configurando para o clinte
 
 const uri = "mongodb+srv://username:password@cluster0-njnwe.mongodb.net/test?retryWrites=true&w=majority"
 
-const crypto = require('crypto') // Middleware para criptografar as senhas
+const crypto = require('crypto') // Middleware para criptografar as senhas 
 
 
 
@@ -85,8 +85,8 @@ app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que 
         })
     }
     else { // No caso de a requisição vier de register.ejs
-        req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de salvar
         let reqEmail = req.body.email // Email da request para fazer a validação
+        req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de salvar
 
         db.collection('data').find({ email: reqEmail }).toArray((err, results) => {
             if(err) return console.log(err)
