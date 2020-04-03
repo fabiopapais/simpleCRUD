@@ -22,7 +22,7 @@ MongoClient.connect(uri, (err, client) => { // Conectando com o cliente MongoDB 
     app.listen(3000, () => { // O servidor só roda no localhost:3000 se conseguir se conectar no cliente MongoDB
         console.log('Server running on port 3000 and Mongo Client connected!') // O método ".listen" do Express inicia um socket UNIX e escuta as conexões em um caminho fornecido (no caso, localhost:3000)
     })
-})
+}) 
 
 app.use(express.static(__dirname + '/public')) // Para usar o CSS
 
@@ -64,8 +64,8 @@ app.get('/show', (req, res) => { // O nosso form nos manda para "/show" e lá o 
 
 // POST (Create)
 app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que foi marcado como "/show" no nosso HTML e envia para o cliente MongoDB, redirecionando no final para "/show"
+    var reqEmail = req.body.email
     if (req.body.name == undefined) { // No caso de a requisição vier de login.ejs (não existe nenhum input de "name", logo, sai undefined)
-        let reqEmail = req.body.email
         req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de tudo
 
         db.collection('data').find({ email: reqEmail }).toArray((err, results) => { // Achar o email no db
@@ -85,7 +85,6 @@ app.post('/show', (req, res) => { // Este bloco recebe a submissão do form que 
         })
     }
     else { // No caso de a requisição vier de register.ejs
-        let reqEmail = req.body.email // Email da request para fazer a validação
         req.body.password = getHashedPassword(req.body.password) // Criptografando nossa senha antes de salvar
 
         db.collection('data').find({ email: reqEmail }).toArray((err, results) => {
