@@ -1,3 +1,4 @@
+![simpleCRUD logo](https://github.com/fabiopapaiss/simpleCRUD/blob/master/views/media/simpleCRUD%20logo.png)
 <h1 align="center">Welcome to simpleCRUD 👋</h1>
 <p>
   <a href="https://github.com/fabiopapaiss/simpleCRUD/graphs/commit-activity" target="_blank">
