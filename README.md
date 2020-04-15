@@ -10,10 +10,16 @@
 </p>
 
 > A simple CRUD (Sign Up, Sign In) made with NodeJS, Express, MongoDB and EJS to learn basic concepts of Express Servers and Authentication.
+
 > Being a learning repo, this project should not be considered a production CRUD, it has many efficiency, architecture and security failures.
+
 > Websites used in this project: ["Handling Authentication in Express.js"](https://stackabuse.com/handling-authentication-in-express-js/) and ["Criando um CRUD completo com NodeJS, Express e MongoDB"](https://medium.com/baixada-nerd/criando-um-crud-completo-com-nodejs-express-e-mongodb-parte-1-3-6c8389d7147d)
 
 ## Usage
+
+```sh
+npm install
+```
 
 ```sh
 npm run dev
